@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body onload="testOnLoad()">
+    <p>Ferdighet 2a - Alternative eventhandlere: onchange osv.</p>
+    <input type="text" onchange="testOnChange()" oninput="testOnInput()" />
+    <h3 ondblclick="testOnDoubleClick()">test dobbelklikk</h3>
+    <h3 oncontextmenu="testOnConextMenu()">test contextmenu</h3>
+    <input type="text" onkeydown="testOnKeyDown()" onkeyup="testOnKeyUp()"/>
+    <h3 onmouseover="testOnMouseOver()" onmouseout="testOnMouseOut()">Test test test</h3>
+    <h2 id="info"></h2>
+
+    <a href="https://www.w3schools.com/jsref/dom_obj_event.asp">Mer informasjon her</a>
+    <script>
+        function testOnLoad() {
+            console.log('onload');
+           // document.getElementById('info').innerHTML += '<li>onload</li>';
+        }
+
+        function testOnChange() {
+            console.log('onchange');
+            //document.getElementById('info').innerHTML += '<li>onchange</li>';
+        }
+
+        function testOnInput() {
+            console.log('oninput');
+            //document.getElementById('info').innerHTML += '<li>oninput</li>';
+        }
+
+        function testOnMouseOver() {
+            console.log('onmouseover');
+            //document.getElementById('info').innerHTML += '<li>onmouseover</li>';
+        }
+
+        function testOnMouseOut() {
+            console.log('onmouseout');
+            //document.getElementById('info').innerHTML += '<li>onmouseout</li>';
+        }
+        
+        function testOnDoubleClick() {
+            console.log('ondoubleclick');
+            //document.getElementById('info').innerHTML += '<li>ondoubleclick</li>';
+        }
+        
+        function testOnConextMenu() {
+            console.log('oncontextmenu');
+            //document.getElementById('info').innerHTML += '<li>oncontextmenu</li>';
+        }
+        
+        function testOnKeyDown() {
+            console.log('onkeydown');
+            //document.getElementById('info').innerHTML += '<li>onkeydown</li>';
+        }
+
+        function testOnKeyUp() {
+            console.log('onkeyup');
+            //document.getElementById('info').innerHTML += '<li>onkeyup</li>';
+        }
+    </script>
+</body>
+</html>

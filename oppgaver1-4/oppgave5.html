@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Tre på rad</title>
+    <style type="text/css">
+        .cell {
+            color: green;
+            background-color: lightgray;
+            width: 100px;
+            height: 100px;
+            float: left;
+            margin: 2px;
+            font-size: 500%;
+            font-family: helvetica;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        div.first {
+            clear: left;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+    1. Grunnleggende HTML
+    2. Kjøre Javascript-kommandoer ved klikk på noe på websiden
+    3. Hente ut element i Javascript - "this" eller via id
+    4. Endre HTML til et element vha. Javascript.
+    -->
+
+    <div id="board"></div>
+
+    <script type="text/javascript">
+
+        //Hjelpemidler
+
+        var divs1 = [];
+        var app = document.getElementById('board');
+
+        //Model
+
+        var divs2 = [];
+        var board = ['', '', '', '', '', '', '', '', ''];
+        var winner = '';
+        var winnerDiv;
+
+        //View
+        function changeWinDiv(displayText) {
+            winnerDiv.innerHTML = displayText + winner;
+        }
+
+        function showWinDiv() {
+            var childDiv = document.createElement('div');
+            app.appendChild(childDiv);
+            return childDiv;
+        }
+
+        function showRestartButton() {
+            var childDiv = document.createElement('button');
+            childDiv.innerHTML = 'restart';
+            childDiv.onclick = function () {
+                setRestart();
+            };
+            app.appendChild(childDiv);
+        }
+
+        function createAndShowSingleDiv(classes, index, arrayElement) {
+            var childDiv = document.createElement('div');
+            childDiv.id = index;
+            childDiv.onclick = function () {
+                setX(this);
+            };
+            childDiv.classList = classes;
+            childDiv.innerHTML = arrayElement;
+            app.appendChild(childDiv);
+            return childDiv;
+        }
+
+        function showBoard(index, symbol, colorValue) {
+            divs1[index].innerHTML = symbol;
+            changeSymbolColor(index, colorValue);
+
+        }
+
+        function changeSymbolColor(index, colorValue) {
+            divs1[index].style.color = colorValue;
+        }
+
+        function resetBoardCell(index) {
+            divs1[index].innerHTML = '';
+        }
+
+        //Controller
+        createLayout();
+        showRestartButton();
+        createWinDiv();
+        function createLayout() {
+            for (var i = 0; i < 9; i++) {
+                var arrayObj;
+                if (i == 0 || i == 3 || i == 6) {
+                    arrayObj = createAndShowSingleDiv('cell first', i, board[i]);
+                } else {
+                    arrayObj = createAndShowSingleDiv('cell', i, board[i]);
+                }
+                divs1.push(arrayObj);
+            }
+
+            setDivs(divs1, divs2);
+        }
+
+        function createWinDiv() {
+            var childDiv = showWinDiv();
+            winnerDiv = childDiv;
+
+        }
+
+        function setRestart() {
+            for (var i = 0; i < board.length; i++) {
+                resetBoardCell(i);
+                board[i] = '';
+            }
+
+            setDivs(divs1, divs2);
+            winner = '';
+            changeWinDiv('');
+        }
+
+        function setX(divElement) {
+            if (divElement.innerHTML != '' || winner != '') return;
+
+            showBoard(parseInt(divElement.id), 'x', 'black');
+            deleteObjectFromArray(divs2, divElement);
+            board[parseInt(divElement.id)] = 'x';
+            if (checkWinning(board, parseInt(divElement.id))) {
+                changeWinDiv('Du vant!');
+            }
+
+            if (checkForEmptySpot(divs2)) {
+                var emptySpot = divs2[divs2.length - 1];
+                showBoard(parseInt(emptySpot.id), 'o', 'blue');
+                board[parseInt(emptySpot.id)] = 'o';                
+                if (checkWinning(board, parseInt(emptySpot.id))) {
+                    changeWinDiv('Du vant!');
+                }
+                divs2.pop();
+
+            }
+        }
+
+        function checkForEmptySpot(arrayObject) {
+            return arrayObject.length != 0;
+        }
+
+        function deleteObjectFromArray(arrayObject, divElement) {
+            var index = arrayObject.indexOf(divElement);
+            arrayObject.splice(index, 1);
+        }
+
+        function setDivs(arrayObject1, arrayObject2) {
+            copyArray(arrayObject1, arrayObject2);
+            shuffleArray(arrayObject2);
+        }
+
+        function copyArray(arrayObject, newArrayObject) {
+            for (var i = 0; i < arrayObject.length; i++) {
+                newArrayObject[i] = arrayObject[i];
+            }
+        }
+
+        //A way to randomly shuffle an array, found it on the internet
+        function shuffleArray(array) {
+            let currentIndex = array.length;
+            let randomIndex;
+
+            // While there remain elements to shuffle.
+            while (currentIndex != 0) {
+
+                // Pick a remaining element.
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+            }
+        }
+
+        //check for every possible way x or o could have won
+        //could be made much easier with either 2d array or using javascript classes and object
+        function checkWinning(arrayObject, cellNumValue, winnerValue) {
+            var symbol = arrayObject[cellNumValue];
+            if (checkWinningRow(arrayObject, cellNumValue, symbol)) {
+                winner = symbol;
+                return true;
+            }
+            if (checkWinningCol(arrayObject, cellNumValue, symbol)) {
+                winner = symbol;
+                return true;
+            }
+            if (checkWinningCross(arrayObject, cellNumValue, symbol)) {
+                winner = symbol;
+                return true;
+            }
+
+            return false;
+        }
+
+        function checkWinningRow(arrayObject, cellNumValue, symbolValue) {
+            if (cellNumValue == 0 || cellNumValue == 3 || cellNumValue == 6) {
+                if (arrayObject[cellNumValue + 1] == symbolValue
+                    && arrayObject[cellNumValue + 2] == symbolValue) {
+                    return true;
+                }
+            }
+            else if (cellNumValue == 1 || cellNumValue == 4 || cellNumValue == 7) {
+                if (arrayObject[cellNumValue - 1] == symbolValue
+                    && arrayObject[cellNumValue + 1] == symbolValue) {
+                    return true;
+                }
+            }
+            else if (cellNumValue == 2 || cellNumValue == 5 || cellNumValue == 8) {
+                if (arrayObject[cellNumValue - 1] == symbolValue
+                    && arrayObject[cellNumValue - 2] == symbolValue) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkWinningCol(arrayObject, cellNumValue, symbolValue) {
+            if (cellNumValue == 0 || cellNumValue == 1 || cellNumValue == 2) {
+                if (arrayObject[cellNumValue + 3] == symbolValue
+                    && arrayObject[cellNumValue + 6] == symbolValue) {
+                    return true;
+                }
+            }
+            else if (cellNumValue == 3 || cellNumValue == 4 || cellNumValue == 5) {
+                if (arrayObject[cellNumValue - 3] == symbolValue
+                    && arrayObject[cellNumValue + 3] == symbolValue) {
+                    return true;
+                }
+            }
+            else if (cellNumValue == 6 || cellNumValue == 7 || cellNumValue == 8) {
+                if (arrayObject[cellNumValue - 3] == symbolValue
+                    && arrayObject[cellNumValue - 6] == symbolValue) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkWinningCross(arrayObject, cellNumValue, symbolValue) {
+            if (arrayObject[0] == symbolValue && arrayObject[4] == symbolValue && arrayObject[8] == symbolValue) {
+                return true;
+            }
+            if (arrayObject[2] == symbolValue && arrayObject[4] == symbolValue && arrayObject[6] == symbolValue) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function getCellNumEquals(cellNumValue, compare1, compare2, compare3){
+            return cellNumValue == compare1 || cellNumValue == compare2 || cellNumValue == compare3;
+        }
+
+        function getCellInLine(arrayObject, cellNumValue, symbolValue, ){
+            return arrayObject[cellNumValue - 3] == symbolValue && arrayObject[cellNumValue - 6] == symbolValue;
+        }
+    </script>
+</body>
+
+</html>

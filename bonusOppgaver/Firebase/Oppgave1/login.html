@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <label for="uname"><b>Email</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" onchange="emailField = this.value" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" onchange="passWordField = this.value" required>
+
+    <button onclick="signIn()">Login</button>
+    <button onclick="signUp()">Register</button>
+
+    <script  src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script  src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script scr="https://www.gstatic.com/firebasejs/9.8.2/firebase-firestore.js"></script>
+    <script>
+        let emailField = '';
+        let passWordField = '';
+
+        function printLoginInfo() {
+            console.log(emailField)
+            console.log(passWordField)
+        }
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyDhN7T7kuS5YYyL0pti_mqysIy_pz21O_8",
+            authDomain: "tictactoe-977c9.firebaseapp.com",
+            databaseURL: "https://tictactoe-977c9.firebaseio.com",
+            projectId: "tictactoe-977c9",
+            storageBucket: "tictactoe-977c9.appspot.com",
+            messagingSenderId: "401201228973",
+            appId: "1:401201228973:web:1287063c33dc5ff4892a24"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        function createUserDB(){
+            
+        }
+
+        function signUp(email, password) {
+
+            const promise = auth.createUserWithEmailAndPassword(emailField, passWordField);
+            promise.catch(e => alert(e.message));
+
+            alert("Signed Up");
+        }
+
+        function signIn() {
+
+            var email = document.getElementById("email");
+            var password = document.getElementById("password");
+
+            const promise = auth.signInWithEmailAndPassword(emailField, passWordField);
+            promise.catch(e => alert(e.message));
+        }
+
+
+        function signOut() {
+
+            auth.signOut();
+            alert("Signed Out");
+
+        }
+    </script>
+
+</body>
+
+</html>

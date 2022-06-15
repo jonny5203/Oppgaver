@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 100px);
+            grid-template-rows: repeat(8, 100px);
+        }
+
+        .whitePiece {
+            color: white;
+            text-shadow: 1px 1px gray;
+        }
+
+        .blackPiece {
+            color: black;
+        }
+
+        .lightSquare,
+        .darkSquare {
+            font-size: 450%;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .lightSquare {
+            background-color: rgb(240, 217, 181);
+        }
+
+        .darkSquare {
+            background-color: rgb(181, 136, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="board">
+
+    </div>
+
+    <div position="1" class="cell"><img src="" position="1"></div>
+    <div position="2" class="cell"></div>
+    <div position="3" class="cell"></div>
+
+    <img src="" position="1">
+    <img src="" position="2">
+    <img src="" position="3">
+
+    <script>
+
+        const lightSquare = 'lightSquare';
+        const darkSquare = 'darkSquare';
+
+        const soldier = '♟';
+        const knight = '♜';
+        const bishop = '♝';
+        const horse = '♞';
+        const king = '♚';
+        const queen = '♛';
+
+        var cellPosition = document.getElementsByClassName('cell');
+        for(var i = 0; i < cellPosition.length; i++){
+            if(cellPosition.getAttribute('position')!= cellPosition.getFirstChild.getAttribute('position')){
+
+            }
+        }
+
+        createBoard();
+
+        function createBoard() {
+            var boardStringValue = '';
+            boardStringValue += createColumns('blackPiece', true);
+            boardStringValue += createColumns('blackPiece', false);
+            boardStringValue += createColumns();
+            boardStringValue += createColumns();
+            boardStringValue += createColumns();
+            boardStringValue += createColumns();
+            boardStringValue += createColumns('whitePiece', false);
+            boardStringValue += createColumns('whitePiece', true);
+
+            document.getElementById('board').innerHTML = boardStringValue;
+        }
+
+        function createColumns(pieceColor, backRowPieces) {
+            if (pieceColor) {
+                if (backRowPieces) {
+                    return createRows(lightSquare, pieceColor, knight)
+                        + createRows(darkSquare, pieceColor, horse)
+                        + createRows(lightSquare, pieceColor, bishop)
+                        + createRows(darkSquare, pieceColor, queen)
+                        + createRows(lightSquare, pieceColor, king)
+                        + createRows(darkSquare, pieceColor, bishop)
+                        + createRows(lightSquare, pieceColor, horse)
+                        + createRows(darkSquare, pieceColor, knight);
+                }
+                return createRows(lightSquare, pieceColor, soldier)
+                    + createRows(darkSquare, pieceColor, soldier)
+                    + createRows(lightSquare, pieceColor, soldier)
+                    + createRows(darkSquare, pieceColor, soldier)
+                    + createRows(lightSquare, pieceColor, soldier)
+                    + createRows(darkSquare, pieceColor, soldier)
+                    + createRows(lightSquare, pieceColor, soldier)
+                    + createRows(darkSquare, pieceColor, soldier);
+            }
+            return createRows(lightSquare)
+                + createRows(darkSquare)
+                + createRows(lightSquare)
+                + createRows(darkSquare)
+                + createRows(lightSquare)
+                + createRows(darkSquare)
+                + createRows(lightSquare)
+                + createRows(darkSquare);
+        }
+
+        function createRows(classCategory, pieceColor, pieces) {
+            if (pieceColor) {
+                return '<div class="' + classCategory + ' ' + pieceColor + '">' + pieces + '</div>';
+            }
+            return '<div class="' + classCategory + '"></div>';
+        }
+    </script>
+</body>
+
+</html>

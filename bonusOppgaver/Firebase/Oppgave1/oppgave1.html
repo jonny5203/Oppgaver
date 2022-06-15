@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            background-color: #2196F3;
+            width: 450px;
+            height: 450px;
+        }
+
+        .grid-item {
+            width: auto;
+            height: auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .imageCell {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <!--<script src="script.js"></script>-->
+</head>
+
+<body>
+
+    <div id="grid-container">
+
+    </div>
+    <div id=""></div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-auth.js"></script>
+
+    <script>
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyDhN7T7kuS5YYyL0pti_mqysIy_pz21O_8",
+            authDomain: "tictactoe-977c9.firebaseapp.com",
+            databaseURL: "https://tictactoe-977c9.firebaseio.com",
+            projectId: "tictactoe-977c9",
+            storageBucket: "tictactoe-977c9.appspot.com",
+            messagingSenderId: "401201228973",
+            appId: "1:401201228973:web:1287063c33dc5ff4892a24"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        //const auth = firebase.auth();
+        const db = firebase.firestore();
+        /*         onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        // User is signed in, see docs for a list of available properties
+                        // https://firebase.google.com/docs/reference/js/firebase.User
+                        const uid = user.uid;
+                        // ...
+                    } else {
+                        // User is signed out
+                        // ...
+                    }
+                }); */
+
+        db.collection('leaderboard').orderBy('matches', 'desc').limit(10).onSnapshot(function(collectionSnapshot){
+            collectionSnapshot.forEach(function(leaderBoardSnapshot){
+                console.log(leaderBoardSnapshot.data());
+            });
+        });
+
+        function measureTime() {
+
+        }
+
+        //getLeaderBoard();
+        function getLeaderBoard() {
+            db.collection('leaderboard').get().then(
+                function (collectionSnapshot) {
+                    collectionSnapshot.forEach(
+                        function (leaderBoardSnapshot) {
+                            console.log(leaderBoardSnapshot.id);
+                            console.log('----');
+                        }
+                    );
+                }
+            );
+
+            //alternativt
+            /*             db.collection('').child(user.uid).get().then(
+                            function(collectionSnapshot){
+                                collectionSnapshot.forEach(
+                                    function(leaderBoardSnapshot){
+            
+                                    }
+                                );
+                            }
+                        ); */
+
+            //alternativt, gjør det om til listener
+            /*             db.collection('').orderBy('').onSnapshot(
+                            function(collectionSnapshot){
+                                collectionSnapshot.forEach(
+                                    function(leaderBoardSnapshot){
+                                        console.log(leaderBoardSnapshot.data());
+                                    }
+                                );
+                            }
+                        ); */
+        }
+
+        function createUserDB(){
+            db.collection('leaderboard').child(''/*put in user uid here*/).update({
+                matches: 0,
+                points: 0
+            });
+        }
+
+        function incrementUserPoints() {
+            db.collection('').child('').update({
+                matches: FieldValue.increment(1),
+                points: FieldValue.increment(1)
+            });
+        }
+
+        function decrementUserPoints() {
+            db.collection('').child('').update({
+                matches: FieldValue.increment(1),
+                points: FieldValue.increment(-1)
+            });
+        }
+
+        var gridContainer = document.getElementById('grid-container');
+        createLayoutObject();
+
+        //model
+        var currenMovesNum = 0;
+        var whosTurn = 1;
+        var gameList = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+        const imagex = 'images/x.png';
+        const imageo = 'images/o.png';
+
+        function resetGame() {
+            currenMovesNum = 0;
+            whosTurn = 1;
+            gameList = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+        }
+
+        function checkIfOccupied(row, col) {
+            return gameList[row][col] != 0;
+        }
+
+        //view
+        function createLayoutObject() {
+            gridContainer.innerHTML = /*html */`
+                <div class="grid-item" row="0" col="0" onclick="nextMove(this)"></div>
+                <div class="grid-item" row="0" col="1" onclick="nextMove(this)"></div>
+                <div class="grid-item" row="0" col="2" onclick="nextMove(this)"></div>
+
+                <div class="grid-item" row="1" col="0" onclick="nextMove(this)"></div>
+                <div class="grid-item" row="1" col="1" onclick="nextMove(this)"></div>
+                <div class="grid-item" row="1" col="2" onclick="nextMove(this)"></div>
+
+                <div class="grid-item" row="2" col="0" onclick="nextMove(this)"></div>
+                <div class="grid-item" row="2" col="1" onclick="nextMove(this)"></div>
+                <div class="grid-item" row="2" col="2" onclick="nextMove(this)"></div>
+            `;
+        }
+
+        function placeImageObject(gridCell) {
+            if (whosTurn == 1) {
+                gridCell.innerHTML = '<img src=' + imagex + ' class="imageCell">';
+            } else {
+                gridCell.innerHTML = '<img src=' + imageo + ' class="imageCell">';
+            }
+        }
+
+        function resetBoard() {
+            var cells = document.getElementsByClassName('grid-item');
+            for (var i = 0; i < cells.length; i++) {
+                cells[i].innerHTML = '';
+            }
+        }
+
+        function winAlert() {
+            if (whosTurn == 1) {
+                window.alert('X vant');
+            } else {
+                window.alert('O vant');
+            }
+        }
+
+        function updateUserStat(){
+            
+        }
+
+        //controller
+        function calculateWin(row, col) {
+            if ((gameList[row][0] == whosTurn && gameList[row][1] == whosTurn && gameList[row][2] == whosTurn)
+                || (gameList[0][col] == whosTurn && gameList[1][col] == whosTurn && gameList[2][col] == whosTurn)) {
+                return true;
+            } else {
+                if ((row == 0 && col == 0)
+                    || (row == 2 && col == 2)) {
+                    if (gameList[0][0] == whosTurn && gameList[2][2] == whosTurn && gameList[1][1] == whosTurn) {
+                        return true;
+                    }
+                } else if ((row == 0 && col == 2)
+                    || (row == 2 && col == 0)) {
+                    if (gameList[0][2] == whosTurn && gameList[2][0] == whosTurn && gameList[1][1] == whosTurn) {
+                        return true;
+                    }
+                } else if (row == 1 && col == 1) {
+                    if ((gameList[0][0] == whosTurn && gameList[2][2] == whosTurn && gameList[1][1] == whosTurn)
+                        || (gameList[0][2] == whosTurn && gameList[2][0] == whosTurn && gameList[1][1] == whosTurn)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
+        }
+
+        function nextMove(gridCell) {
+            var row = parseInt(gridCell.getAttribute('row'));
+            var col = parseInt(gridCell.getAttribute('col'));
+
+            if (checkIfOccupied(row, col)) {
+                return;
+            }
+
+            gameList[row][col] = whosTurn;
+            var ifWon = calculateWin(row, col);
+
+            if (ifWon) {
+                winAlert();
+                resetBoard();
+                resetGame();
+            } else {
+                placeImageObject(gridCell);
+
+                if (whosTurn == 1) {
+                    whosTurn = 2;
+                } else if (whosTurn == 2) {
+                    whosTurn = 1;
+                }
+
+                currenMovesNum++;
+
+                if (currenMovesNum == 9) {
+                    resetBoard();
+                    resetGame();
+                }
+
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

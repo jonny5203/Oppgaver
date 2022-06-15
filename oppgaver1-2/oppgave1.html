@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+
+<body>
+    <p>Hvem spiller Doctor Strange, svar riktig så entrer den hemmelige siden</p>
+    <h2 name="rdj" onclick="checkAns(this)">Robert Downey Jr.</h2>
+    <h2 name="ch" onclick="checkAns(this)">Chris Hemsworth</h2>
+    <h2 name="bc" onclick="checkAns(this)">Benedict Cumberbatch</h2>
+
+    <script>
+        var rightAns = 'bc';
+
+        function checkAns(ans) {
+            var ansValue = ans.getAttribute('name');
+            if (ansValue == 'bc') {
+                window.alert('riktig!!!!!');
+            }else if(ansValue == 'ch'){
+                window.alert('Dette er thor');
+            }else if(ansValue == 'rdj'){
+                window.alert('Vet du ikke hvem ironman er?');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+
+    <script>
+        /*
+        var txtValue = document.getElementById('textValue');
+
+        function showText(){
+            document.getElementById('app').innerHTML = txtValue.value;
+        }
+        */
+
+        //model
+        let textValue = '';
+        let output = '';
+
+        //view
+        view();
+        function view(){
+            document.getElementById('app').innerHTML = /*html*/`
+                <div>Div: ${output}</div>
+                <input type="text" oninput="textValue = this.value">
+                <button onclick="showText()">send</button>
+            `; 
+        }
+
+        //controller
+        function showText(){
+            output += textValue;
+            view();
+        }
+
+    </script>
+</body>
+</html>

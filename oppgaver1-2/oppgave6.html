@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+
+<body>
+    <p>Ferdighet 7 - Sette variabel til resultat av et regnestykke. </p>
+    <input id="width" type="range" min="1" max="1000" step="1" oninput="calculate()" value="2" />
+    <input id="height" type="range" min="1" max="1000" step="1" oninput="calculate()" value="2" />
+    <div id="resultat"></div>
+    <script>
+        var resultatDiv = document.getElementById('resultat');
+        var widthInput = document.getElementById('width');
+        var heightInput = document.getElementById('height');
+
+        calculate();
+
+        function calculate() {
+            var width = parseInt(widthInput.value);
+            var height = parseInt(heightInput.value);
+
+            var area = width * height;
+            var circumference = (2 * width) + (2 * height);
+            resultatDiv.innerHTML = 'areal: ' + width
+                + ' * ' + height
+                + ' = ' + area
+                + ' ' + 'omkrets: ' + '2 * ' 
+                + width + ' + ' + '2 * ' 
+                + height + ' = ' + circumference;
+        }
+    </script>
+</body>
+
+</html>

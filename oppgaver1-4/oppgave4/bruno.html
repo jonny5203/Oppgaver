@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="siden">
+    
+    </div>
+
+    <script>
+        //model
+        const siden = document.getElementById('siden');
+        var personName = '';
+        const greeting = 'hello';
+        var yourAge = '';
+
+        //view
+        updateView()
+
+        function updateView(){
+            siden.innerHTML = '<h1 id="write">input</h1>'
+                + '<input type="text" oninput="personName = this.value"/><button onclick="register()">something</button>'
+                + '<br>'
+                + 'Choose your age : <button onclick="showAge(' + 10 + ')">10</button>'
+                + '<button onclick="showAge(' + 20 +')">20</button>'
+                + '<button onclick="showAge(' + 30 + ')">30</button>'
+                + '<h2> ' + greeting + ' ' + personName + 'you are ' + yourAge + '</h2>';
+        }
+
+        function register() {
+            console.log(personName);
+            updateView();
+        }
+
+        function showAge(age){
+            console.log(age);
+            yourAge = age;
+            updateView();
+        }
+    </script>
+</body>
+</html>

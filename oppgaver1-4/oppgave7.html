@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .lightsOn{
+            /*turn light on or off, yellow color or white*/
+            background-color: yellow;
+        }
+
+        .lamp{
+            /*grid-template-columns: repeat(5, 100px);*/
+            width: 50px;
+            height: 50px;
+            border: 10px solid black;
+            border-radius: 50%;
+            float: left;
+        }
+
+        div.førstPåLinja {
+            clear: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app"></div>
+
+    <script>
+
+        //Hjelpemidler
+        const app = document.getElementById('app');
+
+        //Model
+        let maxCircles = 25;
+        let selectedLampIndex; //random value under 25
+        const lamp = 'lamp';
+        const newLine = 'førstPåLinja';
+        const lightsOn = 'lightsOn';
+
+        //View
+        updateView();
+        function updateView(index){
+            //make 25 circles
+            let circleList = '';
+            for(var i = 0; i < maxCircles; i++){
+                if(i % 5 == 0 && i != 0){
+                    circleList += returnCircle(i, index, true);
+                }else{
+                    circleList += returnCircle(i, index, false);
+                }
+            }
+
+            app.innerHTML = circleList;
+        }
+
+        function returnCircle(lightsOnParam, index, newLineParam){
+            if(lightsOnParam == index){
+                if(newLineParam){
+                    return '<div class="' + lamp + ' ' + newLine + ' ' + lightsOn + '" onclick="onOffSwitch(this)"></div>';
+                }else{
+                    return '<div class="' + lamp + ' ' + lightsOn + '" onclick="onOffSwitch(this)"></div>';
+                }
+                
+            }else{
+                if(newLineParam){
+                    return '<div class="' + lamp + ' ' + newLine + '" onclick="onOffSwitch(this)"></div>';
+                }else{
+                    return '<div class="' + lamp + '" onclick="onOffSwitch(this)"></div>';
+                }
+            }
+        }
+
+        function updateCircle(obj){
+            obj.innerHTML = 
+        }
+
+        //Controller
+        function setSelectedLampIndex(){
+            //set selectedlampindex to random value
+
+            updateView();
+        }
+
+        function onOffSwitch(obj){
+            //onclick, changing classlist so that the element gets class lightson or if it exist delete it
+
+            
+            var startTime = new Date().getTime();
+            var finishTime = new Date().getTime();
+            var spentMilliseconds = Math.floor(finishTime - startTime);
+            var spentSeconds = spentMilliseconds / 1000;
+        }
+
+        function getCurrentTime(){
+            
+        }
+
+    </script>
+</body>
+</html>

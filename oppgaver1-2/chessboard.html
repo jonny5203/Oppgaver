@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 100px);
+            grid-template-rows: repeat(8, 100px);
+        }
+
+        .whitePiece {
+            color: white;
+            text-shadow: 1px 1px gray;
+        }
+
+        .blackPiece {
+            color: black;
+        }
+
+        .lightSquare,
+        .darkSquare {
+            font-size: 450%;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .lightSquare {
+            background-color: rgb(240, 217, 181);
+        }
+
+        .darkSquare {
+            background-color: rgb(181, 136, 99);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="board">
+
+    </div>
+
+    <script>
+
+        //hjelpemiddler
+        var board = document.getElementById('board');
+
+        //model
+        const lightSquare = 'lightSquare';
+        const darkSquare = 'darkSquare';
+        var lagalMoves = '';
+
+        const soldier = '♟';
+        const knight = '♜';
+        const bishop = '♝';
+        const horse = '♞';
+        const king = '♚';
+        const queen = '♛';
+
+        //view
+        showBoard();
+        function showBoard() {
+            var boardValue = '';
+            for (var i = 0; i < 8; i++) {
+                if (i % 2 == 0) {
+                    boardValue += createColumnRow(i, true);
+                } else {
+                    boardValue += createColumnRow(i, false);
+                }
+            }
+
+            board.innerHTML = boardValue;
+        }
+
+        function createColumnRow(index, even) {
+            if (index == 0) {
+                return showRow('blackPiece', true, false, lightSquare);
+            } else if (index == 1) {
+                return showRow('blackPiece', true, true, darkSquare);
+            } else if (index == 6) {
+                return showRow('whitePiece', true, true, lightSquare);
+            } else if (index == 7) {
+                return showRow('whitePiece', true, false, darkSquare);
+            } else {
+                if (even) {
+                    return showRow('', false, false, lightSquare);
+                } else {
+                    return showRow('', false, false, darkSquare);
+                }
+            }
+        }
+
+        function showRow(pieceColor, rowPieces, backRowPieces, beginWith) {
+            var column = '';
+
+            for (var i = 0; i < 8; i++) {
+                if (rowPieces) {
+                    column += createPieceRow(i, beginWith, pieceColor, backRowPieces);
+                } else {
+                    column += showCell(beginWith, pieceColor, '');
+                }
+
+                if (beginWith == lightSquare) {
+                    beginWith = darkSquare;
+                } else {
+                    beginWith = lightSquare;
+                }
+            }
+
+            return column;
+        }
+
+        function createPieceRow(index, beginWith, pieceColor, backRowPieces) {
+            if (backRowPieces) {
+                return showCell(beginWith, pieceColor, soldier);
+            } else {
+                if (index == 0 || index == 7) {
+                    return showCell(beginWith, pieceColor, knight);
+                } else if (index == 1 || index == 6) {
+                    return showCell(beginWith, pieceColor, horse);
+                } else if (index == 2 || index == 5) {
+                    return showCell(beginWith, pieceColor, bishop);
+                } else if (index == 3) {
+                    return kingOrQueen(3, pieceColor, beginWith);
+                } else if (index == 4) {
+                    return kingOrQueen(4, pieceColor, beginWith);
+                }
+            }
+        }
+
+        function kingOrQueen(index, pieceColor, beginWith) {
+            if (pieceColor == 'whitePiece') {
+                if(index == 3){
+                    return showCell(beginWith, pieceColor, queen);
+                }else{
+                    return showCell(beginWith, pieceColor, king);
+                }
+            } else {
+                if(index == 3){
+                    return showCell(beginWith, pieceColor, king);
+                }else{
+                    return showCell(beginWith, pieceColor, queen);
+                }
+            }
+        }
+
+        function showCell(classCategory, pieceColor, pieces) {
+            return '<div class="' + classCategory + ' ' + pieceColor + '">' + pieces + '</div>';
+        }
+
+        //controller
+
+
+    </script>
+</body>
+
+</html>

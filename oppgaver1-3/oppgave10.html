@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color changer with select</title>
+</head>
+
+<body>
+
+    <div id="view">
+
+    </div>
+
+    <script>
+
+        createColorOption();
+        createColorObject();
+
+        //model
+        var colorOption = document.getElementById('colorOption');
+        var colorObject = document.getElementById('colorObject');
+
+        const objDiemensions = 'width: 100px; height: 100px;';
+
+        //view
+        function createColorOption() {
+            document.getElementById('view').innerHTML += `
+                <select name="colorOption" id="colorOption" onchange="changeColor(this)">
+                    <option value="black">svart</option>
+                    <option value="darkblue">mørkeblå</option>
+                    <option value="lightgrey" selected>lysgrå</option>
+                    <option value="lightgreen">lysgrønn</option>
+                    <option value="indianred">lysrød</option>
+                </select>
+            `;
+        }
+
+        function createColorObject() {
+            document.getElementById('view').innerHTML += '<div id="colorObject" style="width: 100px; height: 100px; background-color: white;"></div>';
+        }
+
+        function changeColorObject(color){
+            colorObject.style = objDiemensions + 'background-color: ' + color + ';';
+        }
+
+        //controller
+        changeColor(colorOption);
+
+        function changeColor(selecObj){
+            var color = selecObj.value;
+            changeColorObject(color);
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Søke Start IT</title>
+    <style>
+        .cell {
+            color: blue;
+            background-color: azure;
+            padding: 10px;
+            margin: 10px;
+            border: solid cornflowerblue 5px;
+            width: 20px;
+            height: 20px;
+            float: left;
+        }
+
+        div.førstPåLinja {
+            clear: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+    </div>
+
+    <script>
+
+        //Hjelpemidler
+        let app = document.getElementById('app');
+
+        //Model
+        let cellList = [[
+            //this is a 2d array of javascript objects
+            {
+                id: 'r1k1',
+                possibleMoves: 'r2k1,r1k2'
+            }, {
+                id: 'r1k2',
+                possibleMoves: 'r1k1,r2k2,r1k3'
+            }, {
+                id: 'r1k3',
+                possibleMoves: 'r1k2,r2k3'
+            }
+        ],
+        [
+            {
+                id: 'r2k1',
+                possibleMoves: 'r2k2,r1k1,r3k1'
+            }, {
+                id: 'r2k2',
+                possibleMoves: 'r2k1,r1k2,r2k3,r3k2'
+            }, {
+                id: 'r2k3',
+                possibleMoves: 'r1k3,r2k2,r3k3'
+            }
+        ],
+        [
+            {
+                id: 'r3k1',
+                possibleMoves: 'r2k1,r3k2'
+            }, {
+                id: 'r3k2',
+                possibleMoves: 'r3k1,r2k2,r3k3'
+            }, {
+                id: 'r3k3',
+                possibleMoves: 'r3k2,r2k3'
+            }
+        ]];
+
+        let numList = [1, 2, 3, 4, 5, 6, 7, 8];
+
+        //View
+        shuffle(numList);
+        showView();
+
+        function showView() {
+            var returnView = '';
+            for (var i = 0; i < 3; i++) {
+                returnView += showRow(i);
+            }
+
+            app.innerHTML = returnView;
+        }
+
+        function showRow(index) {
+            var returnRow = '';
+            var actualIndex = 0;
+
+            if (index == 1) {
+                actualIndex = 3;
+            } else if (index == 2) {
+                actualIndex = 6;
+            }
+
+            for (var i = 0; i < 3; i++) {
+                if (i == 0) {
+                    returnRow += showCell(cellList[index][i].id, cellList[index][i].possibleMoves, numList[actualIndex + i], 'førstPåLinja cell');
+                } else {
+                    returnRow += showCell(cellList[index][i].id, cellList[index][i].possibleMoves, numList[actualIndex + i], 'cell');
+                }
+            }
+            return returnRow;
+        }
+
+        function showCell(idValue, possibleMoves, num = '', classValue) {
+            return '<div id="' + idValue + '" class="' + classValue + '" onclick="trykk(this,' + possibleMoves + ')">' + num + '</div>';
+        }
+
+        function updateCell(currentElement, newElement) {
+            currentElement.innerHTML = newElement.innerHTML;
+            newElement.innerHTML = '';
+        }
+
+        //Controller
+
+        function trykk(tagElement, alt1, alt2, alt3, alt4) {
+            if (alt1 != null) {
+                if (alt1.innerHTML == '') {
+                    updateCell(alt1, tagElement);
+                }
+            }
+            if (alt2 != null) {
+                if (alt2.innerHTML == '') {
+                    updateCell(alt2, tagElement);
+                }
+            }
+            if (alt3 != null) {
+                if (alt3.innerHTML == '') {
+                    updateCell(alt3, tagElement);
+                }
+            }
+            if (alt4 != null) {
+                if (alt4.innerHTML == '') {
+                    updateCell(alt4, tagElement);
+                }
+            }
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+
+            // While there remain elements to shuffle.
+            while (currentIndex != 0) {
+
+                // Pick a remaining element.
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+            }
+        }
+
+    </script>
+</body>
+
+</html>

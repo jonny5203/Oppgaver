@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script>
+
+        //hjelpevariabler
+        let app = document.getElementById('app');
+
+        //Model
+        let alt1 = '___';
+        let alt2 = '___';
+        let alt3 = '___';
+
+        //View
+        updateView();
+        function updateView(){
+            var updateString = '';
+
+            app.innerHTML = `
+                <h1 id="titleString">Neque porro quisqua ${alt1} est qui dolorem ipsum quia ${alt2} dolor sit amet, ${alt3} consectetur, adipisci veli</h1>
+                <button onclick="alt1 = this.innerHTML; onButtonClick()">Grønn</button>
+                <button onclick="alt1 = this.innerHTML; onButtonClick()">Rød</button>
+                <br>
+                <button onclick="alt2 = this.innerHTML; onButtonClick()">Hoppe</button>
+                <button onclick="alt2 = this.innerHTML; onButtonClick()">Skyte</button>
+                <br>
+                <button onclick="alt3 = this.innerHTML; onButtonClick()">Snill</button>
+                <button onclick="alt3 = this.innerHTML; onButtonClick()">Grusom</button>
+            `;
+        }
+
+        function updateText(){
+            document.getElementById('titleString').innerHTML = /*HTML*/`Neque porro quisqua <p style="color:green; display: inline">${alt1}</p> est qui 
+            dolorem ipsum quia <p style="color:green; display: inline">${alt2}</p> dolor 
+            sit amet, <p style="color:green; display: inline">${alt3}</p> consectetur, adipisci veli`;
+        }
+
+        //Controller
+        function onButtonClick(){
+            updateText();
+        }
+
+    </script>
+</body>
+</html>

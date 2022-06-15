@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+
+<body>
+    <p>Ferdighet 7a - Sette variabel til tilfeldig tall</p>
+    <div id="resultat"></div>
+    <!--
+    Last siden på nytt for nye tall.
+    Endre tallet 10 på linje 20 og 21 til noe annet. Hva blir annerledes?
+    Endre tallet 100 på linje 20 og 21 til noe annet. Hva blir annerledes?
+    Ta bort Math.floor() på linje 20 og 21. Hva blir forskjellen?
+    -->
+    <div id="randomRectangle"></div>
+
+    <script>
+        var minRandSqr = 10;
+        var maxRandSqr = 100;
+        var minRandBorder = 10;
+        var maxRandBorder = 100;
+
+        var resultatDiv = document.getElementById('resultat');
+        var randomRectangle = document.getElementById('randomRectangle');
+        calculate();
+
+        function calculate() {
+            var randWidth = getRandomNumber(minRandSqr, maxRandSqr);
+            var randHeight = getRandomNumber(minRandSqr, maxRandSqr);
+            var randBorder = getRandomNumber(minRandBorder, maxRandBorder);
+
+            resultatDiv.innerHTML = 'Random With: ' + randWidth 
+                + 'px <br>' + 'Random Height: ' 
+                + randHeight + 'px <br>' 
+                + 'Random Border: ' + randBorder + 'px';
+
+            randomRectangle.innerHTML = '<div style="'
+                + 'background-color: ' + 'green' + ';'
+                + 'width: ' + randWidth + 'px;'
+                + 'height: ' + randHeight + 'px;'
+                + 'border: solid ' + randBorder + 'px;'
+                + 'border-color: black;'
+                + '">' + '</div>';
+
+        }
+
+        function getRandomNumber(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+    </script>
+</body>
+
+</html>

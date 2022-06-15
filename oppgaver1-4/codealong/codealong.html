@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div age="33" onclick="showInfo(this)">Jonny</div>
+    <div age="25" onclick="showInfo(this)">Bruno</div>
+    <div age="29" onclick="showInfo(this)">Truls</div>
+    <div id="resultat"></div>
+    <div id="counter"></div>
+
+    <script>
+        var counterJonny = 0;
+        var counterBruno = 0;
+        var counterTruls = 0;
+        function showInfo(info) {
+            if (info.innerHTML == 'Jonny') {
+                counterJonny++;
+            } else if (info.innerHTML == 'Bruno') {
+                counterBruno++;
+            } else if (info.innerHTML == 'Truls') {
+                counterTruls++;
+            }
+            document.getElementById('resultat').innerHTML = info.innerHTML + info.getAttribute('age');
+            document.getElementById('counter').innerHTML = 'Jonny: ' + counterJonny + ' </br>'
+            + 'Bruno: ' + counterBruno + '</br>' + 'Truls: ' + counterTruls;
+        }
+    </script>
+</body>
+
+</html>

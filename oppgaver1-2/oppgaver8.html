@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        #parentObject{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 50px;
+        }
+
+        .square {
+            border: 1px solid gray;
+            border-radius: 5px;
+            width: 100px;
+            height: 100px;
+        }
+
+        .styleone {
+            background-color: coral;
+        }
+        .styletwo {
+            border: solid 10px;
+        }
+        .stylethree {
+            border-radius: 50%;
+        }   
+        .stylefour {
+            width: 120px; height: 120px;
+        }
+        .stylefive { 
+            transform: rotate(35deg);
+        }
+    </style>
+</head>
+<body>
+    <p>Background Color</p>
+    <input id="styleone" type="checkbox" onchange="onSelectedEffect(this)" class="radioButtons" />
+    <br>
+    <p>Border</p>
+    <input id="styletwo" type="checkbox" onchange="onSelectedEffect(this)" class="radioButtons" />
+    <br>
+    <p>Border Radius 50%</p>
+    <input id="stylethree" type="checkbox" onchange="onSelectedEffect(this)" class="radioButtons" />
+    <br>
+    <p>Forandre Størrelse</p>
+    <input id="stylefour" type="checkbox" onchange="onSelectedEffect(this)" class="radioButtons" />
+    <br>
+    <p>Rotere</p>
+    <input id="stylefive" type="checkbox" onchange="onSelectedEffect(this)" class="radioButtons" />
+
+    <div id="parentObject">
+        <div id="square1" class="square" onclick="changeSelectedDiv(this)">
+
+        </div>
+    
+        <div id="square2" class="square" onclick="changeSelectedDiv(this)">
+    
+        </div>
+    
+        <div id="square3" class="square"  onclick="changeSelectedDiv(this)">
+    
+        </div>
+    
+        <div id="square4" class="square"  onclick="changeSelectedDiv(this)">
+    
+        </div>
+    
+        <div id="square5" class="square"  onclick="changeSelectedDiv(this)">
+    
+        </div>
+    </div>
+    <br>
+    <p id="diplayCurrentSqr">No Square Selected</p>
+
+    <script>
+
+        var selectedDiv;
+        var allDivs = document.getElementsByClassName('radioButtons');
+        var displayCurrentSqr = document.getElementById('diplayCurrentSqr');
+
+        function changeSelectedDiv(newSelectedDiv){
+            selectedDiv = newSelectedDiv;
+            var squareID = selectedDiv.id;
+            displayChosenSqrText(squareID);
+            resetCheckButtons();
+            checkBoxes();
+        }
+
+        function onSelectedEffect(inputtedEffect){
+            if(selectedDiv != null){
+                var idString = inputtedEffect.id;
+                if(inputtedEffect.checked){
+                    selectedDiv.classList.add(idString);
+                }else{
+                    selectedDiv.classList.remove(idString);
+                }
+            }
+        }
+
+        function displayChosenSqrText(squareID){
+            displayCurrentSqr.innerHTML = squareID;
+        }
+
+        function resetCheckButtons(){
+            for(var i = 0; i < allDivs.length; i++){
+                allDivs[i].checked = false;
+            }
+        }
+
+        function checkBoxes(){
+            if(selectedDiv.classList.length != 0){
+                console.log(selectedDiv.classList.length.toString());
+                for(var i = 0; i < selectedDiv.classList.length; i++){
+                    if(selectedDiv.classList[i] != 'square'){
+                        document.getElementById(selectedDiv.classList[i]).checked = true;
+                    }
+                    
+                }
+            }
+        }
+    </script>
+</body>
+</html>

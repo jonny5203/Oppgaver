@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+
+<body>
+    <p>Ferdighet 4 - Variabel utenfor funksjon og innenfor funksjon, samt sette sammen tekst av flere deler</p>
+    <button onclick="addNumber(1)">1</button>
+    <button onclick="addNumber(2)">2</button>
+    <button onclick="addNumber(3)">3</button>
+
+    <button onclick="addNumber(4)">4</button>
+    <button onclick="addNumber(5)">5</button>
+    <button onclick="addNumber(6)">6</button>
+
+    <button onclick="addNumber(7)">7</button>
+    <button onclick="addNumber(8)">8</button>
+    <button onclick="addNumber(9)">9</button>
+
+    <div id="info"></div>
+
+    <script>
+
+        //modell
+        const correctCombination = '3812';
+        var wordStringList = '';
+
+        var tallA = 0;
+        var tekstA = 'TekstA ';
+
+        var tallB = 0;
+        var tekstB = 'TekstB ';
+
+        
+        function modifyData(){
+            tallA++;
+            tallB++;
+            tekstA += '*';
+            tekstB += '*';
+        }
+
+        function addData(numberPressed){
+            wordStringList += numberPressed;
+        }
+
+        function correctCombinationModel(){
+            if(wordStringList.includes(correctCombination)){
+                return true;
+            }
+            return false;
+        }
+
+        function emptyWordStringList(){
+            wordStringList = '';
+        }
+
+        //view
+        //Skal ikke has noe med modellen å gjøre
+        function tellViev() {
+            document.getElementById('info').innerHTML =
+                'TallA=' + tallA +
+                '<br/>TallB=' + tallB +
+                '<br/>TekstA=' + tekstA +
+                '<br/>TekstB=' + tekstB;
+        }
+
+        function infoView() {
+            document.getElementById('info').innerHTML = '<p>' + wordStringList + '</p>';
+        }
+
+        function displayAlert(){
+            window.alert('Riktig Kombinasjon, du har åpnet låsen');
+        }
+
+        //controller
+
+        console.log(tallA, tekstA);
+
+        function correctCombinationController(){
+            return correctCombinationModel();
+        }
+
+        function checkCombination() {
+            if (correctCombinationModel()) {
+                emptyWordStringList();
+                displayAlert();
+                infoView();
+                return;
+            }
+            infoView();
+        }
+
+        function addNumber(numberPressed) {
+            addData(numberPressed);
+            checkCombination();
+        }
+
+        function tell() {
+            modifyData();
+            tellViev();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+//input for name, button for age, input box city, result text
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script>
+
+        //hjelpemidler
+        let application = document.getElementById('app')
+
+        //modell
+        let age = 0;
+        let yourName;
+        let city;
+
+
+        //view
+        updateView()
+        function updateView() {
+            application.innerHTML = /*HTML*/`<input type="text" oninput="writeName(this.value)">
+                <br>
+                <button onclick="chooseAge(1)">1</button><button onclick="chooseAge(2)">2</button><button onclick="chooseAge(5)">5</button>
+                <br>
+                <input type="checkbox" onchange="cidade('Sandefjord', this)" name="city">Sandefjord
+                <input type="checkbox" onchange="cidade('Larvik', this)" name="city">Larvik
+                <input type="checkbox" onchange="cidade('Stavern', this)" name="city">Stavern
+                <div id="result">Your name is ${yourName} you are ${age} years old, and you come from ${city}</div>
+                `;
+        }
+
+        function updateResult() {
+            document.getElementById('result').innerHTML = `<div id="result">Your name is ${yourName} you are ${age} years old, and you come from ${city}</div>`;
+        }
+
+        //controller
+
+        function chooseAge(yourAge) {
+            age += parseInt(yourAge);
+            updateResult();
+        }
+
+        function cidade(cityName, obj) {
+            disableAllCheckBox(obj);
+
+            city = cityName;
+            updateResult();
+        }
+
+        function writeName(nameValue) {
+            yourName = nameValue;
+            updateResult();
+        }
+
+        function disableAllCheckBox(obj) {
+            var cityList = document.getElementsByName('city');
+            for (var i = 0; i < cityList.length; i++) {
+                if (cityList[i] != obj) {
+                    cityList[i].checked = false;
+                }
+            }
+        }
+
+    </script>
+
+
+
+
+</body>
+
+</html>

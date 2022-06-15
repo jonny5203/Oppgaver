@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+
+    <script>
+        //Lag en function som returnerer en resultatet av regnestykke, du har
+        //de to input taggene der brukeren skal skrive et nummer i hver, og de vil
+        //bli plusset sammen eller multiplisert, tips, ha 2 variabler i javascript som
+        //som reflekterer hva som står i de forskjellige input typene.
+        //Ha så 4 forskjellige retur functions som returnerer svaret, basert på hvilke knapper brukeren har valgt,
+        //og en funsjon som setter svaret inni resultat div'n
+    
+        // Hjelpermidler //jst get the id of div
+           
+        let app = document.getElementById('app');
+        let result;
+
+        
+        // model
+        var num1;
+        var num2;
+        
+        // view // innerhtml // update what u see on the page
+        createLayout();
+
+        function showResult(displayText){
+            if(result){
+                result.innerHTML = displayText;
+            }else{
+                getResultID();
+                result.innerHTML = displayText;
+            }
+        }
+
+        function createLayout(){
+            app.innerHTML = 
+            createInputField('num1') +
+            createInputField('num2') +
+            '<br>' +
+            createButton('Add', '+') +
+            createButton('Subtract', '-') +
+            createButton('Multiply', '*') +
+            createButton('Divide', '/') +
+
+            '<div id="result"></div>';
+        }
+
+        function createButton(buttonText, symbol){
+            return '<button onclick="calc(' + symbol + ')">' + buttonText + '</button>';
+        }
+
+        function createInputField(numValue){
+            return '<input type="number" onchange="' + numValue + ' = this.value"></br>';
+        }
+
+        // controller // function
+        function calc(operation){
+            // kan også gjøre det sånn, da trenger du ikke if setningene
+            showResult(eval(num1 + operation + num1));
+
+        }
+
+        function getResultID(){
+            result = document.getElementById('result');
+        }
+    
+    </script>
+</body>
+</html>
